@@ -1,52 +1,75 @@
-﻿using OpenQA.Selenium;
+﻿using System;
+using OpenQA.Selenium;
 using System.Collections.Generic;
+
 
 namespace WebScraperNet
 {
     class GetActions
     {
-        public static List<string> ScrapeData()
+        public static List<string> ScrapeData(IWebDriver driver)
         {
             IWebElement element;
             List<string> innerText = new List<string>();
             string xPath;
 
-            Program._wait.Until(d => d.FindElement(By.XPath("//*[@id='pf-detail-table']/div[1]/table")));
-
-            for (int i = 1; i <= 9; i++)
+            innerText.Add("id");
+            innerText.Add("Scrape Time");
+            for (int i = 1; i <= 13; i++)
             {
-                xPath = $"//*[@id='pf-detail-table']/div[1]/table/thead/tr/th[{i}]";
+                if (i == 13)
+                {
+                    xPath = $"//*[@id='pf-detail-table']/div[1]/table/thead/tr/th[{i}]";
+                    element = driver.FindElement(By.XPath(xPath));
+                    innerText.Add(element.Text + "\n");
 
-                element = Program.driver.FindElement(By.XPath(xPath));
-                innerText.Add(element.Text);
+                }
+                else
+                {
+                    xPath = $"//*[@id='pf-detail-table']/div[1]/table/thead/tr/th[{i}]";
+                    element = driver.FindElement(By.XPath(xPath));
+                    innerText.Add(element.Text);
+                }
             }
+
+            DateTime time = DateTime.Now;               ;
 
             for (int i = 1; i <= 10; i++)
             {
-                xPath = $"//*[@id='pf-detail-table']/div[1]/table/tbody/tr[{i}]/td[1]/a";
+                innerText.Add(time.ToString());
 
-                element = Program.driver.FindElement(By.XPath(xPath));
+                xPath = $"//*[@id='pf-detail-table']/div[1]/table/tbody/tr[{i}]/td[1]/a";
+                element = driver.FindElement(By.XPath(xPath));
+
                 innerText.Add(element.Text);
+
 
                 for (int j = 2; j <= 13; j++)
                 {
-                    if (j == 10 || j == 11 || j == 12)
+                    switch (j)
                     {
-                        innerText.Add("-");
-                    } else
-                    {
-                        xPath = $"//*[@id='pf-detail-table']/div[1]/table/tbody/tr[{i}]/td[{j}]";
-
-                        element = Program.driver.FindElement(By.XPath(xPath));
-                        innerText.Add(element.Text);
+                        case 2:
+                            xPath = $"//*[@id='pf-detail-table']/div[1]/table/tbody/tr[{i}]/td[{j}]";
+                            element = driver.FindElement(By.XPath(xPath));
+                            innerText.Add(element.Text.Replace(",", ""));
+                            break;
+                        case 10:
+                        case 11:
+                        case 12:
+                            innerText.Add("-");
+                            break;
+                        case 13:
+                            innerText.Add(element.Text + "\n");
+                            break;
+                        default:
+                            xPath = $"//*[@id='pf-detail-table']/div[1]/table/tbody/tr[{i}]/td[{j}]";
+                            element = driver.FindElement(By.XPath(xPath));
+                            innerText.Add(element.Text.Replace(",", ""));
+                            break;
                     }
                 }
             }
- //           Console.WriteLine(innerText);
             return innerText;
-           // System.IO.File.WriteAllLines(@"C:\Users\Tom\Desktop\Development\CapstoneProject\WebScraperNet\tableData.txt", innerText);
-
-           // driver.Quit();
         }
     }
 }

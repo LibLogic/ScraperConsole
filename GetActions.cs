@@ -3,7 +3,7 @@ using OpenQA.Selenium;
 using System.Collections.Generic;
 
 
-namespace WebScraperNet
+namespace ScraperConsole
 {
     class GetActions
     {

@@ -5,7 +5,7 @@ using OpenQA.Selenium.Chrome;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 
-namespace WebScraperNet
+namespace ScraperConsole
 {
     public class Tests
     {

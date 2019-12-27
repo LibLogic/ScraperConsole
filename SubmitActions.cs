@@ -1,7 +1,7 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 
-namespace WebScraperNet
+namespace ScraperConsole
 {
     class SubmitActions
     {

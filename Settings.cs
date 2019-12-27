@@ -1,5 +1,5 @@
 ﻿
-namespace WebScraperNet
+namespace ScraperConsole
 {
     public class Settings
     {

@@ -69,6 +69,7 @@ namespace ScraperConsole
                     }
                 }
             }
+            driver.Quit();
             return innerText;
         }
     }

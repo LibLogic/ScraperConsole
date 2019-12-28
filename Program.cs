@@ -2,16 +2,15 @@
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 
+
+
 namespace ScraperConsole
 {
     class Program
     {
-        readonly static IWebDriver driver = new ChromeDriver();
-
         static void Main()
         {
-            var scrapeData = Scraper.GetScrape(driver);
-            driver.Quit();
+            var scrapeData = Scraper.GetScrape();
 
             DBActions.WriteTable(scrapeData, "Scrapes");
         }

@@ -16,8 +16,8 @@ namespace ScraperConsole
         public void BrowserLogin()
         {
             driver.Navigate().GoToUrl(Settings.Yahoo.loginPage);
-            driver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(60));
-
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(60);
+           
             driver.FindElement(By.Id(Settings.Yahoo.loginNameField)).SendKeys(Settings.Yahoo.loginName + Keys.Enter);
 
             driver.FindElement(By.Id(Settings.Yahoo.loginPassField)).SendKeys(Settings.Yahoo.loginPass + Keys.Enter);

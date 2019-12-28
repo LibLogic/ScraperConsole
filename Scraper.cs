@@ -1,18 +1,21 @@
 ﻿using System;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Chrome;
 using System.Collections.Generic;
 
 namespace ScraperConsole
 {
     class Scraper
     {
-        public static List<string> GetScrape(IWebDriver driver)
+        public static List<string> GetScrape()
         {
+            ChromeOptions options = new ChromeOptions();
+            options.AddArgument("headless");
+            IWebDriver driver = new ChromeDriver(options);
 
-            driver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(120));
-
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(60);
             driver.Navigate().GoToUrl(Settings.Yahoo.loginPage);
-            //LoginAction.Login(driver);
+
             Login(driver);
 
             driver.Navigate().GoToUrl(Settings.Yahoo.portfolioPage);

@@ -6,10 +6,10 @@ namespace ScraperConsole
     {
         public static void Main()
         {
-            UserCredentials currentUser = new UserCredentials("admin@angelcloud.org", "Lino@7196");
             //UserCredentials currentUser = new UserCredentials("admin@angelcloud.org", "Lino@7196");
+            //UserCredentials currentUser = new UserCredentials("hdgknsn@gmail.com", "Lino@7196");
 
-            Scrape.RunScrape(currentUser);
+            //Scrape.RunScrape(currentUser);
         }
     }
 }

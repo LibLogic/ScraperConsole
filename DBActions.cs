@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Common;
 using System.Data.SqlClient;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ScraperConsole
 {
@@ -48,12 +46,13 @@ namespace ScraperConsole
             return conn;
         }
 
-        public static void WriteTable(List<string> scrapeData, string table)
+        public static void WriteTables(List<string> scrapeData, string table, Settings.Yahoo.UserCredentials currentUser)
         {
-
+            string scrapetime = "";
             string CSVFile = FileActions.WriteCSVFile(scrapeData);
 
             DataTable dt = new DataTable();
+
             string line = null;
             int i = 0;
 
@@ -62,6 +61,8 @@ namespace ScraperConsole
                 while ((line = stream.ReadLine()) != null)
                 {
                     string[] data = line.Split(',');
+
+
 
                     if (data.Length > 0)
                     {
@@ -75,6 +76,10 @@ namespace ScraperConsole
                         }
                         else
                         {
+                            if (i == 1)
+                            {
+                                scrapetime = data[1];
+                            }
                             DataRow row = dt.NewRow();
                             row.ItemArray = data;
                             dt.Rows.Add(row);
@@ -92,6 +97,23 @@ namespace ScraperConsole
                 copy.WriteToServer(dt);
             }
             conn.Close();
+
+            string name = currentUser.UserName;
+            //write to Users_Scrapes table  need currentUser & ScapeTime
+            string query = $"INSERT INTO Users_Scrapes (ScrapeId, UserName) VALUES (@ScrapeId, @UserName)";
+            using (SqlCommand cmd = new SqlCommand(query, conn))
+            {
+                cmd.Parameters.Add("@ScrapeId", SqlDbType.DateTime2, 7).Value = scrapetime;
+                cmd.Parameters.Add("@UserName", SqlDbType.NVarChar, 450).Value = name;
+
+                conn.Open();
+                cmd.ExecuteNonQuery();
+                conn.Close();
+            }
+
+
         }
     }
 }
+
+

@@ -1,18 +1,15 @@
-﻿using System;
-using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
-
-
+﻿using static ScraperConsole.Settings.Yahoo;
 
 namespace ScraperConsole
 {
-    class Program
+    public class Program
     {
-        static void Main()
+        public static void Main()
         {
-            var scrapeData = Scraper.GetScrape();
+            UserCredentials currentUser = new UserCredentials("admin@angelcloud.org", "Lino@7196");
+            //UserCredentials currentUser = new UserCredentials("admin@angelcloud.org", "Lino@7196");
 
-            DBActions.WriteTable(scrapeData, "Scrapes");
+            Scrape.RunScrape(currentUser);
         }
     }
 }

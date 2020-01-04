@@ -6,9 +6,9 @@ namespace ScraperConsole
 {
     class FileActions
     {
-        public static string WriteCSVFile(List<string> innerText)
+        public static string WriteCSVFile(List<string> tableText)
         {
-            string CSV = string.Join(",", innerText);
+            string CSV = string.Join(",", tableText);
             string path = @"C:\Users\Tom\Desktop\Development\CapstoneProject\ScraperConsole\lastScrape.csv";
             File.WriteAllText(path, CSV);
             return path;

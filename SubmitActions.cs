@@ -14,13 +14,13 @@ namespace ScraperConsole
                 driver.FindElement(By.Name(element)).SendKeys(value + Keys.Enter);
         }
 
-        public static void SelectDropDown(IWebDriver driver, string elementType, string element, string value)
-        {
-            if (elementType == "Id")
-                new SelectElement(driver.FindElement(By.Id(element))).SelectByText(value);
+        //public static void SelectDropDown(IWebDriver driver, string elementType, string element, string value)
+        //{
+        //    if (elementType == "Id")
+        //        new SelectElement(driver.FindElement(By.Id(element))).SelectByText(value);
 
-            if (elementType == "Name")
-                new SelectElement(driver.FindElement(By.Name(element))).SelectByText(value);
-        }
+        //    if (elementType == "Name")
+        //        new SelectElement(driver.FindElement(By.Name(element))).SelectByText(value);
+        //}
     }
 }

@@ -1,7 +1,7 @@
 ﻿using System;
 using OpenQA.Selenium;
 using System.Collections.Generic;
-
+using static ScraperConsole.Settings.Yahoo;
 
 namespace ScraperConsole
 {
@@ -10,67 +10,63 @@ namespace ScraperConsole
         public static List<string> ScrapeData(IWebDriver driver)
         {
             IWebElement element;
-            List<string> innerText = new List<string>();
+            List<string> tableText = new List<string>();
             string xPath;
 
-            innerText.Add("id");
-            innerText.Add("Scrape Time");
+            tableText.Add("id");
+            tableText.Add("Scrape Time");
             for (int i = 1; i <= 13; i++)
             {
                 if (i == 13)
                 {
                     xPath = $"//*[@id='pf-detail-table']/div[1]/table/thead/tr/th[{i}]";
                     element = driver.FindElement(By.XPath(xPath));
-                    innerText.Add(element.Text + "\n");
-
+                    tableText.Add(element.Text + "\n");
                 }
                 else
                 {
                     xPath = $"//*[@id='pf-detail-table']/div[1]/table/thead/tr/th[{i}]";
                     element = driver.FindElement(By.XPath(xPath));
-                    innerText.Add(element.Text);
+                    tableText.Add(element.Text);
                 }
             }
 
-            DateTime time = DateTime.Now;               ;
+            DateTime time = DateTime.Now;
 
-            for (int i = 1; i <= 10; i++)
+            IWebElement elementTable = driver.FindElement(By.XPath($"//*[@id='pf-detail-table']/div[1]/table"));
+            List<IWebElement> elementRows = new List<IWebElement>(elementTable.FindElements(By.TagName("tr")));
+
+            for (int i = 1; i < elementRows.Count; i++)
             {
-                innerText.Add(time.ToString());
+                tableText.Add(time.ToString("O"));
 
                 xPath = $"//*[@id='pf-detail-table']/div[1]/table/tbody/tr[{i}]/td[1]/a";
                 element = driver.FindElement(By.XPath(xPath));
-
-                innerText.Add(element.Text);
+                tableText.Add(element.Text);
 
 
                 for (int j = 2; j <= 13; j++)
                 {
                     switch (j)
                     {
-                        case 2:
-                            xPath = $"//*[@id='pf-detail-table']/div[1]/table/tbody/tr[{i}]/td[{j}]";
-                            element = driver.FindElement(By.XPath(xPath));
-                            innerText.Add(element.Text.Replace(",", ""));
-                            break;
                         case 10:
                         case 11:
                         case 12:
-                            innerText.Add("-");
+                            tableText.Add("-");
                             break;
                         case 13:
-                            innerText.Add(element.Text + "\n");
+                            tableText.Add(element.Text + "\n");
                             break;
                         default:
                             xPath = $"//*[@id='pf-detail-table']/div[1]/table/tbody/tr[{i}]/td[{j}]";
                             element = driver.FindElement(By.XPath(xPath));
-                            innerText.Add(element.Text.Replace(",", ""));
+                            tableText.Add(element.Text.Replace(",", ""));
                             break;
                     }
                 }
             }
             driver.Quit();
-            return innerText;
+            return tableText;
         }
     }
 }

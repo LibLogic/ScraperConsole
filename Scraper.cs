@@ -7,7 +7,7 @@ namespace ScraperConsole
 {
     class Scraper
     {
-        public static List<string> GetScrape()
+        public static List<string> GetScrape(Settings.Yahoo.UserCredentials currentUser)
         {
             ChromeOptions options = new ChromeOptions();
             options.AddArgument("headless");
@@ -16,17 +16,17 @@ namespace ScraperConsole
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(60);
             driver.Navigate().GoToUrl(Settings.Yahoo.loginPage);
 
-            Login(driver);
+            Login(driver, currentUser);
 
             driver.Navigate().GoToUrl(Settings.Yahoo.portfolioPage);
 
             return GetActions.ScrapeData(driver);
         }
 
-        public static void Login(IWebDriver driver)
+        public static void Login(IWebDriver driver, Settings.Yahoo.UserCredentials currentUser)
         {
-            SubmitActions.SubmitText(driver, "Id", Settings.Yahoo.loginNameField, Settings.Yahoo.loginName);
-            SubmitActions.SubmitText(driver, "Id", Settings.Yahoo.loginPassField, Settings.Yahoo.loginPass);
+            SubmitActions.SubmitText(driver, "Id", Settings.Yahoo.loginNameField, currentUser.UserName);
+            SubmitActions.SubmitText(driver, "Id", Settings.Yahoo.loginPassField, currentUser.UserPass);
         }
     }
 }

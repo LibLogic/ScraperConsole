@@ -1,3 +1,4 @@
 .vs
 lastScrape.csv
-obj/Debug/
+obj
+bin

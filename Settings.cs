@@ -13,8 +13,8 @@
                 public string UserPass { get { return _userPass; } set { _userPass = value; } }
                 public UserCredentials(string username, string userpass)
                 {
-                    UserName = username;
-                    UserPass = userpass;
+                    _userName = username;
+                    _userPass = userpass;
                 }
             }
 

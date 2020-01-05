@@ -15,12 +15,14 @@ namespace ScraperConsole
         [SetUp]
         public void BrowserLogin()
         {
+            Settings.Yahoo.UserCredentials currentUser = new Settings.Yahoo.UserCredentials("hdgknsn@gmail.com", "Lino@7196");
+
             driver.Navigate().GoToUrl(Settings.Yahoo.loginPage);
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(60);
            
-            driver.FindElement(By.Id(Settings.Yahoo.loginNameField)).SendKeys(Settings.Yahoo.loginName + Keys.Enter);
+            driver.FindElement(By.Id(Settings.Yahoo.loginNameField)).SendKeys(currentUser.UserName + Keys.Enter);
 
-            driver.FindElement(By.Id(Settings.Yahoo.loginPassField)).SendKeys(Settings.Yahoo.loginPass + Keys.Enter);
+            driver.FindElement(By.Id(Settings.Yahoo.loginPassField)).SendKeys(currentUser.UserPass + Keys.Enter);
 
             driver.Navigate().GoToUrl(Settings.Yahoo.portfolioPage);
         }

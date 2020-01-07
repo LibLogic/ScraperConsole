@@ -1,9 +1,6 @@
+.git
 .vs
-lastScrape.csv
 obj
 bin
-.vs
-lastScrape.csv
-obj
-bin
-ScraperConsole/bin
+lastScrape.cvs
+
